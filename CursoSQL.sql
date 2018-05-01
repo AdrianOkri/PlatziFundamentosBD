@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Proveedor;
 CREATE TABLE Carrito (
     carrito_id INT NOT NULL AUTO_INCREMENT,
     cliente_id INT NOT NULL,
-    cliente_cuentaPlatzii VARCHAR(60) NOT NULL,
+    cliente_cuentaPlatzi VARCHAR(60) NOT NULL,
     mpago_id INT NOT NULL,
     mcompra_id INT NOT NULL,
     mcompra_cod NUMERIC(15,0) NOT NULL,
@@ -77,3 +77,29 @@ CREATE TABLE Mcompra (
     mcompra_dir VARCHAR(120),
     PRIMARY KEY (mcompra_id, mcompra_cod)
 );
+/*====================================================*/
+/*                  Table: Mpago                      */
+/*====================================================*/
+CREATE TABLE Mpago (
+    mpago_id INT NOT NULL AUTO_INCREMENT,
+    mpago_tipo VARCHAR(250) NOT NULL,
+    mpago_codPasarela VARCHAR(15) NOT NULL,
+    mpago_status VARCHAR(10) NOT NULL,
+    PRIMARY KEY (mpago_id)
+);
+/*====================================================*/
+/*                  Table: Proveedor                  */
+/*====================================================*/
+CREATE TABLE Proveedor (
+    prov_id NUMERIC(5,0) NOT NULL,
+    prov_codCc VARCHAR(15) NOT NULL COMMENT 'Codigo Camara de Comercio',
+    prov_nombre VARCHAR(90) NOT NULL,
+    prov_desc VARCHAR(300) NOT NULL,
+    prov_fechaUcompra TIMESTAMP,
+    prov_montoUcompra NUMERIC(7,0),
+    prov_moneda VARCHAR(5),
+    PRIMARY KEY (prov_id, prov_codCc)
+);
+
+ALTER TABLE Carrito ADD CONSTRAINT fk_Carrito_Cliente FOREIGN KEY (cliente_id, cliente_cuentaPlatzi)
+    REFERENCES (cliente_id, cliente_cuentaPlatzi) ON DELETE RESTRICT ON UPDATE RESTRICT;
